@@ -1,0 +1,127 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint",
+		"prettier"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
+	"rules": {
+		// ----------------------------------------
+		// CORE JAVASCRIPT/TYPESCRIPT RULES
+		// ----------------------------------------
+		// Practicality/SPT-AKI rules (Set to off/0 or "off")
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-namespace": "off",
+		// Safety/Best Practice Rules
+		"@typescript-eslint/no-unused-vars": "warn",
+		"@typescript-eslint/no-unused-expressions": [
+			"warn",
+			{
+				"allowShortCircuit": false,
+				"allowTernary": false
+			}
+		],
+		// Recommended for safety in TS projects: Always require semicolons
+		"semi": [
+			"error",
+			"always"
+		],
+		// ----------------------------------------
+		// FORMATTING AND STYLE RULES
+		// ----------------------------------------
+		// Indentation: Set to 4 spaces
+		"@typescript-eslint/indent": [
+			"warn",
+			4
+		],
+		// Quotes: Set to use double quotes
+		"@typescript-eslint/quotes": [
+			"warn",
+			"double"
+		],
+		// Comma dangle (trailing commas): Set to warn if present
+		"@typescript-eslint/comma-dangle": "warn",
+		// Spacing
+		"@typescript-eslint/func-call-spacing": "error",
+		"@typescript-eslint/keyword-spacing": [
+			"warn",
+			{
+				"before": true,
+				"after": true
+			}
+		],
+		// Brace Style: Keeps your preferred "allman" style (brace on new line)
+		"@typescript-eslint/brace-style": [
+			"warn",
+			"allman"
+		],
+		// ----------------------------------------
+		// NAMING CONVENTIONS
+		// ----------------------------------------
+		"@typescript-eslint/naming-convention": [
+			"warn",
+			{
+				"selector": "default",
+				"format": [
+					"camelCase"
+				],
+				"leadingUnderscore": "allow"
+			},
+			{
+				"selector": "typeLike",
+				"format": [
+					"PascalCase"
+				]
+			},
+			{
+				"selector": "objectLiteralProperty",
+				"format": [
+					"PascalCase",
+					"camelCase"
+				],
+				"leadingUnderscore": "allow"
+			},
+			{
+				"selector": "typeProperty",
+				"format": [
+					"PascalCase",
+					"camelCase"
+				],
+				"leadingUnderscore": "allow"
+			},
+			{
+				"selector": "enumMember",
+				"format": [
+					"UPPER_CASE"
+				]
+			}
+		],
+		// ----------------------------------------
+		// TYPE CHECKING
+		// ----------------------------------------
+		"@typescript-eslint/explicit-module-boundary-types": [
+			"warn",
+			{
+				"allowArgumentsExplicitlyTypedAsAny": true
+			}
+		]
+	},
+	"overrides": [
+		{
+			"files": [
+				"*.mjs",
+				"*.ts"
+			],
+			"env": {
+				"node": true
+			}
+		}
+	]
+}
