@@ -143,57 +143,21 @@ export class LunaStatusQuestsService
                         const questName = this.getQuestName(quest._id, profile);
 
                         let lockedReason: string | undefined = undefined;
-                        let finalStatus = questStatus;
-                        
                         if (questStatus === QuestStatus.Locked) 
                         {
                             lockedReason = this.getLockedReason(quest._id, profile);
-                            
-                            // If quest is locked but all prerequisites are completed, 
-                            // it should actually be Available (the game API may be stale)
+                            // If quest is locked but all prerequisites are completed, log a warning
+                            // This might indicate a timing issue or other non-quest-based lock condition
                             if (lockedReason === undefined) 
                             {
-                                // Check if quest has prerequisites - if it does and they're all completed,
-                                // override status to Available since prerequisites are the only quest-based lock
-                                const hasPrerequisites = this.questPrerequisites.has(quest._id);
-                                
-                                if (hasPrerequisites) 
-                                {
-                                    // Quest has prerequisites - verify all are completed
-                                    const prerequisites = this.questPrerequisites.get(quest._id);
-                                    if (prerequisites && prerequisites.length > 0) 
-                                    {
-                                        const allPrereqsCompleted = prerequisites.every((prereq) => 
-                                        {
-                                            const prereqStatus = this.questHelper.getQuestStatus(profile, prereq.id);
-                                            return prereqStatus === QuestStatus.Success;
-                                        });
-                                        
-                                        if (allPrereqsCompleted) 
-                                        {
-                                            // All prerequisites completed - quest should be Available
-                                            // Override the potentially stale Locked status from the API
-                                            finalStatus = QuestStatus.Available;
-                                            lockedReason = undefined;
-                                            this.logger.debug(
-                                                `[LunaStatusQuestsServer] Quest ${quest._id.substring(0, 12)} overridden to Available (all prerequisites completed)`
-                                            );
-                                        }
-                                    }
-                                }
-                                else 
-                                {
-                                    // No prerequisites - quest is locked by other conditions (level, trader rep, etc.)
-                                    // Keep as Locked but don't show a reason since it's not quest-based
-                                    this.logger.debug(
-                                        `[LunaStatusQuestsServer] Quest ${quest._id.substring(0, 12)} is Locked with no prerequisites. Locked by level/rep/other conditions.`
-                                    );
-                                }
+                                this.logger.debug(
+                                    `[LunaStatusQuestsServer] Quest ${quest._id.substring(0, 12)} is Locked but all prerequisites are completed. May be locked by non-quest conditions.`
+                                );
                             }
                         }
                                 
                         questStatuses[quest._id] = {
-                            status: finalStatus,
+                            status: questStatus,
                             lockedReason: lockedReason,
                             questName: questName ?? quest._id
                         };

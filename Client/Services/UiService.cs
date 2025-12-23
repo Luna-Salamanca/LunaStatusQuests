@@ -116,28 +116,19 @@ namespace LunaStatusQuests.Services
 
                 string statusDisplay;
                 // Special handling for locked quests to show why they are locked (prerequisites).
-                if (status == EQuestStatus.Locked)
+                if (status == EQuestStatus.Locked && !string.IsNullOrEmpty(lockedReason))
                 {
-                    if (!string.IsNullOrEmpty(lockedReason))
+                    // Check if the reason is just a raw quest ID (indicates potential DB mismatch or missing data).
+                    bool looksLikeQuestId = Regex.IsMatch(lockedReason, @"^[a-f0-9]{24}$");
+                    if (looksLikeQuestId)
                     {
-                        // Check if the reason is just a raw quest ID (indicates potential DB mismatch or missing data).
-                        bool looksLikeQuestId = Regex.IsMatch(lockedReason, @"^[a-f0-9]{24}$");
-                        if (looksLikeQuestId)
-                        {
-                            statusDisplay =
-                                $"<color={statusColor}>{statusName}</color> <color=#FF0000>(Quest not found: {lockedReason.Substring(0, 12)})</color>";
-                        }
-                        else
-                        {
-                            statusDisplay =
-                                $"<color={statusColor}>{statusName}</color> <color=#666666>({lockedReason})</color>";
-                        }
+                        statusDisplay =
+                            $"<color={statusColor}>{statusName}</color> <color=#FF0000>(Quest not found: {lockedReason.Substring(0, 12)})</color>";
                     }
                     else
                     {
-                        // Quest is locked but has no quest-based reason (likely level, trader rep, or other conditions)
                         statusDisplay =
-                            $"<color={statusColor}>{statusName}</color> <color=#888888>(Other conditions)</color>";
+                            $"<color={statusColor}>{statusName}</color> <color=#666666>({lockedReason})</color>";
                     }
                 }
                 else
