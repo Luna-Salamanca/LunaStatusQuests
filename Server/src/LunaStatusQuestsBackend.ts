@@ -87,7 +87,7 @@ export class LunaStatusQuestsBackend implements IPreSptLoadMod
                     }
                 }
             ],
-            "shared-quests"
+            "luna-status-quests"
         );
 
         this.logger.info("[LunaStatusQuestsServer] Backend module loaded successfully");

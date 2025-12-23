@@ -48,7 +48,7 @@ namespace LunaStatusQuests
                 "General",
                 "ShowStatusInTrader",
                 true,
-                new ConfigDescription("Show shared quest status in trader quest view")
+                new ConfigDescription("Show Luna quest status in trader quest view")
             );
 
             VisibleProfiles = config.Bind(

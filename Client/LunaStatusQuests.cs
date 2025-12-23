@@ -64,14 +64,14 @@ namespace LunaStatusQuests
         
         public static DateTime LastFetch = DateTime.MinValue;
         
-        private const string STATUS_MARKER_START = "--- Shared Quest Status ---";
+        private const string STATUS_MARKER_START = "--- Luna Quest Status ---";
         private const string STATUS_MARKER_END = "--------------------------";
         private const float MONITOR_UPDATE_INTERVAL = 0.15f;
         private const float TRADER_MONITOR_UPDATE_INTERVAL = 0.75f;
         private const int MIN_DESCRIPTION_LENGTH = 50;
         
         private static readonly Regex StatusSectionPattern = new Regex(
-            @"<color=#\w+>---\s*Shared Quest Status\s*---<\/color>[\s\S]*?<color=#\w+>-{20,}<\/color>\s*",
+            @"<color=#\w+>---\s*(Shared|Luna) Quest Status\s*---<\/color>[\s\S]*?<color=#\w+>-{20,}<\/color>\s*",
             RegexOptions.Compiled);
         
         public static string CurrentQuestId = null;

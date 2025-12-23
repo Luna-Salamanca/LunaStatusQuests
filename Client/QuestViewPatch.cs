@@ -10,7 +10,7 @@ using UnityEngine;
 namespace LunaStatusQuests
 {
     /// <summary>
-    /// Injects shared quest status into the trader quest detail view.
+    /// Injects Luna quest status into the trader quest detail view.
     /// </summary>
     [HarmonyPatch(typeof(QuestView), nameof(QuestView.UpdateView))]
     public static class QuestViewUpdateViewPatch
