@@ -123,12 +123,12 @@
   </ItemGroup>
 
   <!-- Add UnityEngine.IMGUIModule which contains the GUI class -->
-<ItemGroup>
-  <Reference Include="UnityEngine.IMGUIModule">
-    <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-    <Private>false</Private>
-  </Reference>
-</ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(SPTPath)\EscapeFromTarkov_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
 
   <!-- .NET Framework System References -->
   <ItemGroup>
@@ -142,17 +142,26 @@
 
   <!-- Auto-copy DLL to SPT after build -->
   <Target Name="CopyToSPT" AfterTargets="Build" Condition="Exists('$(SPTPath)')">
-    <Copy SourceFiles="$(OutputPath)LunaStatusQuests.dll" DestinationFolder="$(SPTPath)\BepInEx\plugins\LunaStatusQuests" />
+    <Copy
+      SourceFiles="$(OutputPath)LunaStatusQuests.dll"
+      DestinationFolder="$(SPTPath)\BepInEx\plugins\LunaStatusQuests"
+    />
   </Target>
 
-<!-- Also copy to dev dist folder -->
-<Target Name="CopyToDevDist" AfterTargets="Build">
-  <Copy SourceFiles="$(OutputPath)LunaStatusQuests.dll" DestinationFolder="G:\SPT11\SPT 3.11\SPT 3.11 DEV\LunaStatusQuests\dist\BepInEx\plugins\LunaStatusQuests" />
-</Target>
+  <!-- Also copy to dev dist folder -->
+  <Target Name="CopyToDevDist" AfterTargets="Build">
+    <Copy
+      SourceFiles="$(OutputPath)LunaStatusQuests.dll"
+      DestinationFolder="G:\SPT11\SPT 3.11\SPT 3.11 DEV\LunaStatusQuests\dist\BepInEx\plugins\LunaStatusQuests"
+    />
+  </Target>
 
   <!-- Clean up on rebuild -->
-  <Target Name="CleanSPT" BeforeTargets="Clean" Condition="Exists('$(SPTPath)\BepInEx\plugins\LunaStatusQuests\LunaStatusQuests.dll')">
+  <Target
+    Name="CleanSPT"
+    BeforeTargets="Clean"
+    Condition="Exists('$(SPTPath)\BepInEx\plugins\LunaStatusQuests\LunaStatusQuests.dll')"
+  >
     <Delete Files="$(SPTPath)\BepInEx\plugins\LunaStatusQuests\LunaStatusQuests.dll" />
   </Target>
-
 </Project>

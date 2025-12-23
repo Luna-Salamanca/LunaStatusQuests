@@ -21,3 +21,4 @@
 /tmp
 build.mjs
 .prettierrc.json
+.config
